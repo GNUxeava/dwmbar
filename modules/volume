@@ -6,14 +6,14 @@ VOLUME_ON_ICON=''
 VOLUME_MUTED_ICON=''
 
 get_volume(){
-        curStatus=$(pactl get-sink-mute @DEFAULT_SINK@)
-        volume=$(pactl get-sink-volume @DEFAULT_SINK@ | tail -n 2 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n 1)
+        #curStatus=$(pactl get-sink-mute @DEFAULT_SINK@)
+        volume=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))
 
-        if [ "${curStatus}" = 'Mute: yes' ]
+        if [ "${curStatus}" = '0%' ]
         then
-            echo "$VOLUME_MUTED_ICON  $volume%"
+            echo "$VOLUME_MUTED_ICON  $volume"
         else
-            echo "$VOLUME_ON_ICON  $volume%"
+            echo "$VOLUME_ON_ICON  $volume"
         fi
 }
 
