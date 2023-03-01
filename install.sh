@@ -17,30 +17,28 @@
 
 DWMBAR="/usr/bin/dwmbar"
 
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root" > /dev/stderr
-  exit 1
-fi
+#if [ "$EUID" -ne 0 ]
+#  then echo "Please run as root" > /dev/stderr
+#  exit 1
+#fi
 
 if [[ ! -f "dwmbar" ]]; then
 	echo "dwmbar executable not found." > /dev/stderr
 	exit 1
 fi
 
-# Create /usr/share/dwmbar
+# Create ~/.config/dwmbar
 # Containing example bar.sh and modules
 
-mkdir --parents "/usr/share/dwmbar/"
+DWMBAR_CONF="/home/$USER/.config/dwmbar"
 
-echo "./modules --> /usr/share/dwmbar/modules"
-cp -rT "./modules" "/usr/share/dwmbar/modules"
+mkdir -pv $DWMBAR_CONF
 
-echo "./bar.sh --> /usr/share/dwmbar/bar.sh"
-cp "./bar.sh" "/usr/share/dwmbar/bar.sh"
+cp -vrfT "./modules" "$DWMBAR_CONF/modules"
 
-echo "./config --> /usr/share/dwmbar/config"
-cp -r "./config" "/usr/share/dwmbar/config"
+cp -vf "./bar.sh" "$DWMBAR_CONF/bar.sh"
 
-echo "./dwmbar --> /usr/bin/dwmbar"
-cp "./dwmbar" "/usr/bin/dwmbar"
+cp -vr "./config" "$DWMBAR_CONF/config"
+
+sudo cp -vf "./dwmbar" $DWMBAR
 [[ $? -eq 0 ]] && echo "Installation completed successfully"
