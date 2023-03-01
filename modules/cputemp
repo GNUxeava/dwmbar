@@ -15,7 +15,7 @@ get_cputemp()
 
 	CPU_TEMP="$(sensors | grep temp1 | awk 'NR==1{gsub("+", " "); gsub("\\..", " "); print $2}')"
 
-	if [ "$CPU_TEMP" -ge $WARNING_LEVEL ]; then
+	if [[ "$CPU_TEMP" -ge $WARNING_LEVEL ]]; then
 		PREFIX="$FIRE$PREFIX"
 	fi
 
