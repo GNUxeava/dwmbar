@@ -7,7 +7,7 @@ PREFIX='ﯧ'
 
 get_backlight()
 {
-    echo "$PREFIX $(light | sed 's/\..*//g')%"
+    echo "$PREFIX $(xbacklight -get)%"
 }
 
 get_backlight
